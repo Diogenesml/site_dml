@@ -722,3 +722,173 @@ details p {
     font-size: 47px;
   }
 }
+  /* =========================================================
+   ADIÇÕES — nova seção "Solicitar orçamento" + cards de contato
+   Cole este bloco no final do seu styles.css
+   ========================================================= */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 32px;
+  margin-top: 40px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-quick {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.info-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.info-card:hover {
+  border-color: rgba(255, 91, 61, 0.5);
+  transform: translateY(-2px);
+}
+
+.info-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 91, 61, 0.12);
+  color: #ff5b3d;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.info-icon-linkedin {
+  background: rgba(10, 102, 194, 0.15);
+  color: #4da3ff;
+}
+
+.info-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.info-text small {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.info-text strong {
+  font-size: 15px;
+  font-weight: 600;
+  color: #f5f1ea;
+}
+
+/* ---------- Card do formulário de orçamento ---------- */
+
+.quote-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 36px;
+}
+
+@media (max-width: 640px) {
+  .quote-card {
+    padding: 24px;
+  }
+}
+
+.quote-card h3 {
+  margin: 14px 0 12px;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.25;
+}
+
+.quote-card h3 em {
+  color: #ff5b3d;
+  font-style: italic;
+}
+
+.quote-sub {
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 26px;
+  line-height: 1.6;
+}
+
+.quote-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.quote-form input,
+.quote-form textarea {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: #f5f1ea;
+  font-family: inherit;
+  font-size: 15px;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.quote-form input::placeholder,
+.quote-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.quote-form input:focus,
+.quote-form textarea:focus {
+  outline: none;
+  border-color: #ff5b3d;
+}
+
+.quote-form textarea {
+  min-height: 120px;
+}
+
+.quote-submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.quote-feedback {
+  min-height: 18px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.quote-feedback.is-error {
+  color: #ff6b6b;
+}
