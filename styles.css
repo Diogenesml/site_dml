@@ -1087,16 +1087,6 @@ details p {
 
 /* ---------- Acessibilidade: respeita quem pediu menos animação ---------- */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  .reveal {
-    transition: none;
-    opacity: 1;
-    transform: none;
-  }
-
   .button-primary,
   .service-card,
   summary span {
@@ -1673,4 +1663,386 @@ body {
 .info-icon .arw {
   width: 1.1em;
   height: 1.1em;
+}
+
+.pj-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.pj-main {
+  grid-row: span 2;
+}
+
+.pj {
+  display: flex;
+}
+
+/* Card: mesma linguagem do botão e do "Sobre mim" (borda + sombra sólida) */
+.pj-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #fbfaf5;
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pj-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 var(--ink);
+}
+
+.pj-view {
+  position: relative;
+  overflow: hidden;
+  min-height: 236px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.pj-main .pj-view {
+  flex: 1;
+  min-height: 470px;
+}
+
+.pj-body {
+  display: grid;
+  gap: 6px;
+  padding: 20px 22px 22px;
+}
+
+.pj-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.pj-body h3 {
+  font-size: 23px;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.pj-year {
+  font: 500 12px var(--mono);
+  color: #6e796f;
+}
+
+.pj-body p {
+  max-width: 460px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #59645d;
+  margin: 0;
+}
+
+.pj-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+
+.pj-tags li {
+  font: 500 11px var(--mono);
+  padding: 4px 11px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+}
+
+/* ---------- 1. Calculadora funcional ---------- */
+.pj-view--calc {
+  display: grid;
+  place-items: center;
+  padding: 64px 34px 40px;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.35), transparent 42%),
+    #b5d84a;
+}
+
+.pj-hint {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 11px var(--mono);
+  color: var(--acid);
+  background: var(--ink);
+  padding: 6px 12px;
+}
+
+.pj-hint i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--acid);
+  animation: pulse-acid 1.8s infinite;
+}
+
+@keyframes pulse-acid {
+  0% {
+    box-shadow: 0 0 0 0 rgba(215, 255, 79, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(215, 255, 79, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(215, 255, 79, 0);
+  }
+}
+
+.calc {
+  width: 100%;
+  max-width: 340px;
+}
+
+.calc-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+  min-height: 92px;
+  padding: 14px 18px 12px;
+  text-align: right;
+  background: #17251f;
+  color: #d8ecb5;
+  border: 2px solid var(--ink);
+}
+
+.calc-expr {
+  min-height: 18px;
+  font: 12px var(--mono);
+  color: #8fa596;
+}
+
+.calc-out {
+  font: 500 28px/1.15 var(--mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calc-pad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.ck {
+  font: 600 18px var(--mono);
+  padding: 14px 0;
+  color: var(--ink);
+  background: #f6f8e8;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease,
+    background-color 0.15s ease;
+}
+
+.ck:hover {
+  background: #fff;
+}
+
+.ck:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+.ck-wide {
+  grid-column: span 3;
+  background: #e4e8cf;
+}
+
+.ck-zero {
+  grid-column: span 2;
+}
+
+.ck-op {
+  color: var(--acid);
+  background: #17251f;
+}
+
+.ck-op:hover {
+  background: #2a3d34;
+}
+
+/* operador escolhido, esperando o próximo número */
+.ck-op.active {
+  color: var(--ink);
+  background: var(--acid);
+}
+
+.ck-eq {
+  color: #fff;
+  background: #356779;
+}
+
+.ck-eq:hover {
+  background: #2c5767;
+}
+
+/* ---------- 2. Página temática ---------- */
+.pj-view--super {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #2b1f1b;
+  color: #eed8b5;
+}
+
+.pj-view--super::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  background: repeating-linear-gradient(
+    115deg,
+    transparent 0 20px,
+    rgba(241, 180, 100, 0.14) 21px 23px
+  );
+  transform: rotate(12deg);
+  transition: transform 0.9s ease;
+}
+
+.pj-card:hover .pj-view--super::before {
+  transform: rotate(12deg) translateX(-34px);
+}
+
+.pj-view--super > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pj-super-title {
+  font: 400 clamp(24px, 3vw, 32px) Georgia, serif;
+  letter-spacing: 0.16em;
+  transition: text-shadow 0.4s ease;
+}
+
+.pj-card:hover .pj-super-title {
+  text-shadow: 0 0 22px rgba(241, 180, 100, 0.65);
+}
+
+.pj-view--super small {
+  margin-top: 10px;
+  font: 11px var(--mono);
+  letter-spacing: 0.1em;
+  color: #cbb48f;
+}
+
+/* ---------- 3. Portfólio (janela de navegador) ---------- */
+.pj-view--me {
+  display: grid;
+  place-items: center;
+  padding: 30px;
+  background:
+    radial-gradient(circle at 85% 90%, rgba(53, 103, 121, 0.35), transparent 45%),
+    #d8dad2;
+}
+
+.pj-window {
+  width: 100%;
+  max-width: 290px;
+  background: #fbfaf5;
+  border: 2px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  transition: transform 0.3s ease;
+}
+
+.pj-card:hover .pj-window {
+  transform: translateY(-5px) rotate(-1.2deg);
+}
+
+.pj-bar {
+  display: flex;
+  gap: 5px;
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.pj-bar span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+}
+
+.pj-bar span:first-child {
+  background: var(--acid);
+}
+
+.pj-page {
+  padding: 18px 20px 20px;
+}
+
+.pj-code {
+  display: block;
+  font: 500 26px var(--mono);
+  color: #638100;
+  margin-bottom: 8px;
+}
+
+.pj-page p {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.05;
+  letter-spacing: -0.06em;
+}
+
+.pj-page p b {
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 860px) {
+  .pj-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .pj-main {
+    grid-row: auto;
+  }
+
+  .pj-main .pj-view {
+    min-height: 0;
+  }
+
+  .pj-view--calc {
+    padding: 60px 20px 28px;
+  }
+
+  .pj-card {
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pj-card,
+  .pj-window,
+  .pj-view--super::before {
+    transition: none;
+  }
+
+  .pj-hint i {
+    animation: none;
+  }
 }

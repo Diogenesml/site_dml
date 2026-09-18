@@ -140,6 +140,127 @@ if (finePointer && !reduceMotion) {
   });
 }
 
+/* ---------- Calculadora funcional (card de projeto) ---------- */
+const calc = select('[data-calc]');
+
+if (calc) {
+  const out = select('[data-calc-out]', calc);
+  const exprLine = select('[data-calc-expr]', calc);
+  const opButtons = selectAll('[data-op]', calc);
+  const symbols = { '+': '+', '-': '−', '*': '×', '/': '÷' };
+
+  // Já começa com a conta do exemplo: 142 × 7 (aperte "=" para ver o resultado)
+  let current = '7';
+  let previous = '142';
+  let operator = '*';
+  let overwrite = true;
+  let lastExpr = '';
+  let error = false;
+
+  const fmt = (value) => String(value).replace('.', ',');
+  const clean = (number) => String(Number(number.toPrecision(12)));
+
+  const compute = (a, b, op) => {
+    const x = Number(a);
+    const y = Number(b);
+    if (op === '+') return x + y;
+    if (op === '-') return x - y;
+    if (op === '*') return x * y;
+    return y === 0 ? null : x / y;
+  };
+
+  const reset = () => {
+    current = '0';
+    previous = null;
+    operator = null;
+    overwrite = true;
+    lastExpr = '';
+    error = false;
+  };
+
+  const render = () => {
+    out.textContent = error ? 'Erro' : fmt(current);
+    exprLine.textContent = lastExpr || (operator ? `${fmt(previous)} ${symbols[operator]}` : '');
+    opButtons.forEach((button) => button.classList.toggle('active', operator === button.dataset.op && overwrite));
+  };
+
+  const press = {
+    digit(d) {
+      if (error) reset();
+      if (overwrite) {
+        current = d;
+        overwrite = false;
+      } else if (current.replace(/[-.]/g, '').length < 12) {
+        current = current === '0' ? d : current + d;
+      }
+      lastExpr = '';
+    },
+    dot() {
+      if (error) reset();
+      if (overwrite) {
+        current = '0.';
+        overwrite = false;
+      } else if (!current.includes('.')) {
+        current += '.';
+      }
+      lastExpr = '';
+    },
+    op(o) {
+      if (error) reset();
+      if (operator && !overwrite) {
+        const result = compute(previous, current, operator);
+        if (result === null) { reset(); error = true; return; }
+        previous = clean(result);
+        current = previous;
+      } else if (!operator) {
+        previous = current;
+      }
+      operator = o;
+      overwrite = true;
+      lastExpr = '';
+    },
+    equals() {
+      if (error) { reset(); return; }
+      if (!operator) return;
+      const line = `${fmt(previous)} ${symbols[operator]} ${fmt(current)} =`;
+      const result = compute(previous, current, operator);
+      if (result === null) { reset(); error = true; return; }
+      current = clean(result);
+      previous = null;
+      operator = null;
+      overwrite = true;
+      lastExpr = line;
+    },
+    clear() { reset(); }
+  };
+
+  calc.addEventListener('click', (event) => {
+    const key = event.target.closest('button');
+    if (!key) return;
+    if (key.dataset.k !== undefined) press.digit(key.dataset.k);
+    else if (key.dataset.dot !== undefined) press.dot();
+    else if (key.dataset.op) press.op(key.dataset.op);
+    else if (key.dataset.eq !== undefined) press.equals();
+    else if (key.dataset.clear !== undefined) press.clear();
+    render();
+  });
+
+  // Teclado físico, quando o foco estiver dentro da calculadora
+  calc.addEventListener('keydown', (event) => {
+    const { key } = event;
+    if (/^\d$/.test(key)) press.digit(key);
+    else if (key === ',' || key === '.') press.dot();
+    else if (key.length === 1 && '+-*/'.includes(key)) press.op(key);
+    else if (key === '=') press.equals();
+    else if (key === 'Escape' || key === 'c' || key === 'C') press.clear();
+    else return;
+    event.preventDefault();
+    render();
+  });
+
+  render();
+}
+
 /* ---------- Ano no rodapé ---------- */
 const year = select('#year');
 if (year) year.textContent = new Date().getFullYear();
