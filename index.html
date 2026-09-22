@@ -18,6 +18,14 @@ rel="stylesheet"
 />
 <link rel="stylesheet" href="styles.css" />
 <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+
+<script>
+  (function () {
+    var saved = localStorage.getItem('theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
 </head>
 <body>
 
@@ -35,6 +43,9 @@ rel="stylesheet"
 <a href="#projetos">Projetos</a>
 <a href="#contato">Contato</a>
 </nav>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar modo escuro" aria-pressed="false">
+  <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+</button>
 <a class="header-cta" href="#contato">Vamos conversar <span class="arw" aria-hidden="true"></span></a>
 </header>
 

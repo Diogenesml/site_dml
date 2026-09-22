@@ -1,81 +1,113 @@
 const select = (selector, scope = document) => scope.querySelector(selector);
-const selectAll = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+const selectAll = (selector, scope = document) => [
+  ...scope.querySelectorAll(selector),
+];
 
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const reduceMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)",
+).matches;
+const finePointer = window.matchMedia(
+  "(hover: hover) and (pointer: fine)",
+).matches;
 
 /* ---------- Menu mobile ---------- */
-const menuButton = select('.menu-button');
-const navigation = select('.nav');
+const menuButton = select(".menu-button");
+const navigation = select(".nav");
 
 const setMenu = (open) => {
   if (!menuButton || !navigation) return;
-  navigation.classList.toggle('open', open);
-  menuButton.setAttribute('aria-expanded', String(open));
-  menuButton.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+  navigation.classList.toggle("open", open);
+  menuButton.setAttribute("aria-expanded", String(open));
+  menuButton.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
 };
 
-menuButton?.addEventListener('click', () => setMenu(!navigation.classList.contains('open')));
-selectAll('.nav a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
-document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setMenu(false); });
-document.addEventListener('click', (event) => { if (!event.target.closest('.site-header')) setMenu(false); });
-
-/* ---------- Aparecer ao rolar (com pequeno escalonamento em listas) ---------- */
-selectAll('.reveal').forEach((element) => {
-  const siblings = [...element.parentElement.children].filter((child) => child.classList.contains('reveal'));
-  element.style.setProperty('--d', `${Math.min(siblings.indexOf(element), 5) * 90}ms`);
+menuButton?.addEventListener("click", () =>
+  setMenu(!navigation.classList.contains("open")),
+);
+selectAll(".nav a").forEach((link) =>
+  link.addEventListener("click", () => setMenu(false)),
+);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") setMenu(false);
+});
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".site-header")) setMenu(false);
 });
 
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
+/* ---------- Aparecer ao rolar (com pequeno escalonamento em listas) ---------- */
+selectAll(".reveal").forEach((element) => {
+  const siblings = [...element.parentElement.children].filter((child) =>
+    child.classList.contains("reveal"),
+  );
+  element.style.setProperty(
+    "--d",
+    `${Math.min(siblings.indexOf(element), 5) * 90}ms`,
+  );
+});
 
-selectAll('.reveal').forEach((element) => revealObserver.observe(element));
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.12 },
+);
+
+selectAll(".reveal").forEach((element) => revealObserver.observe(element));
 
 /* ---------- Barra de progresso + cabeçalho ao rolar ---------- */
-const progressBar = select('.scroll-progress');
-const headerBg = select('.header-bg');
+const progressBar = select(".scroll-progress");
+const headerBg = select(".header-bg");
 let scrollTicking = false;
 
 const updateScroll = () => {
   const root = document.documentElement;
   const max = root.scrollHeight - root.clientHeight;
   const progress = max > 0 ? window.scrollY / max : 0;
-  progressBar?.style.setProperty('--progress', progress.toFixed(4));
-  headerBg?.classList.toggle('on', window.scrollY > 24);
+  progressBar?.style.setProperty("--progress", progress.toFixed(4));
+  headerBg?.classList.toggle("on", window.scrollY > 24);
   scrollTicking = false;
 };
 
-window.addEventListener('scroll', () => {
-  if (!scrollTicking) {
-    scrollTicking = true;
-    requestAnimationFrame(updateScroll);
-  }
-}, { passive: true });
+window.addEventListener(
+  "scroll",
+  () => {
+    if (!scrollTicking) {
+      scrollTicking = true;
+      requestAnimationFrame(updateScroll);
+    }
+  },
+  { passive: true },
+);
 updateScroll();
 
 /* ---------- Link ativo no menu conforme a seção visível ---------- */
-const spy = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (!entry.isIntersecting) return;
-    selectAll('.nav a').forEach((link) => {
-      link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+const spy = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      selectAll(".nav a").forEach((link) => {
+        link.classList.toggle(
+          "active",
+          link.getAttribute("href") === `#${entry.target.id}`,
+        );
+      });
     });
-  });
-}, { rootMargin: '-45% 0px -50% 0px' });
+  },
+  { rootMargin: "-45% 0px -50% 0px" },
+);
 
-selectAll('main section[id]').forEach((section) => spy.observe(section));
+selectAll("main section[id]").forEach((section) => spy.observe(section));
 
 /* ---------- Palavra que se reescreve no código do hero ---------- */
-const typed = select('.typed');
+const typed = select(".typed");
 
 if (typed && !reduceMotion) {
-  const words = typed.dataset.words.split('|');
+  const words = typed.dataset.words.split("|");
   let wordIndex = 0;
   let charCount = words[0].length;
   let deleting = true;
@@ -103,85 +135,99 @@ if (typed && !reduceMotion) {
 /* ---------- Efeitos de mouse (só em telas com mouse) ---------- */
 if (finePointer && !reduceMotion) {
   // Inclinação suave em cards marcados com data-tilt
-  selectAll('[data-tilt]').forEach((element) => {
+  selectAll("[data-tilt]").forEach((element) => {
     const max = Number(element.dataset.tilt) || 5;
 
-    element.addEventListener('pointermove', (event) => {
+    element.addEventListener("pointermove", (event) => {
       const rect = element.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width - 0.5;
       const y = (event.clientY - rect.top) / rect.height - 0.5;
       element.style.transform = `perspective(900px) rotateX(${(-y * max).toFixed(2)}deg) rotateY(${(x * max).toFixed(2)}deg)`;
-      element.style.setProperty('--gx', `${((x + 0.5) * 100).toFixed(1)}%`);
-      element.style.setProperty('--gy', `${((y + 0.5) * 100).toFixed(1)}%`);
+      element.style.setProperty("--gx", `${((x + 0.5) * 100).toFixed(1)}%`);
+      element.style.setProperty("--gy", `${((y + 0.5) * 100).toFixed(1)}%`);
     });
 
-    element.addEventListener('pointerleave', () => { element.style.transform = ''; });
+    element.addEventListener("pointerleave", () => {
+      element.style.transform = "";
+    });
   });
 
   // Luz que acompanha o mouse nos cards de serviço
-  selectAll('.service-card').forEach((card) => {
-    card.addEventListener('pointermove', (event) => {
+  selectAll(".service-card").forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
       const rect = card.getBoundingClientRect();
-      card.style.setProperty('--mx', `${event.clientX - rect.left}px`);
-      card.style.setProperty('--my', `${event.clientY - rect.top}px`);
+      card.style.setProperty("--mx", `${event.clientX - rect.left}px`);
+      card.style.setProperty("--my", `${event.clientY - rect.top}px`);
     });
   });
 
   // Paralaxe leve na ilustração do hero
-  const heroArt = select('.hero-art');
-  heroArt?.addEventListener('pointermove', (event) => {
+  const heroArt = select(".hero-art");
+  heroArt?.addEventListener("pointermove", (event) => {
     const rect = heroArt.getBoundingClientRect();
-    heroArt.style.setProperty('--px', (((event.clientX - rect.left) / rect.width) * 2 - 1).toFixed(3));
-    heroArt.style.setProperty('--py', (((event.clientY - rect.top) / rect.height) * 2 - 1).toFixed(3));
+    heroArt.style.setProperty(
+      "--px",
+      (((event.clientX - rect.left) / rect.width) * 2 - 1).toFixed(3),
+    );
+    heroArt.style.setProperty(
+      "--py",
+      (((event.clientY - rect.top) / rect.height) * 2 - 1).toFixed(3),
+    );
   });
-  heroArt?.addEventListener('pointerleave', () => {
-    heroArt.style.setProperty('--px', 0);
-    heroArt.style.setProperty('--py', 0);
+  heroArt?.addEventListener("pointerleave", () => {
+    heroArt.style.setProperty("--px", 0);
+    heroArt.style.setProperty("--py", 0);
   });
 }
 
 /* ---------- Calculadora funcional (card de projeto) ---------- */
-const calc = select('[data-calc]');
+const calc = select("[data-calc]");
 
 if (calc) {
-  const out = select('[data-calc-out]', calc);
-  const exprLine = select('[data-calc-expr]', calc);
-  const opButtons = selectAll('[data-op]', calc);
-  const symbols = { '+': '+', '-': '−', '*': '×', '/': '÷' };
+  const out = select("[data-calc-out]", calc);
+  const exprLine = select("[data-calc-expr]", calc);
+  const opButtons = selectAll("[data-op]", calc);
+  const symbols = { "+": "+", "-": "−", "*": "×", "/": "÷" };
 
   // Já começa com a conta do exemplo: 142 × 7 (aperte "=" para ver o resultado)
-  let current = '7';
-  let previous = '142';
-  let operator = '*';
+  let current = "7";
+  let previous = "142";
+  let operator = "*";
   let overwrite = true;
-  let lastExpr = '';
+  let lastExpr = "";
   let error = false;
 
-  const fmt = (value) => String(value).replace('.', ',');
+  const fmt = (value) => String(value).replace(".", ",");
   const clean = (number) => String(Number(number.toPrecision(12)));
 
   const compute = (a, b, op) => {
     const x = Number(a);
     const y = Number(b);
-    if (op === '+') return x + y;
-    if (op === '-') return x - y;
-    if (op === '*') return x * y;
+    if (op === "+") return x + y;
+    if (op === "-") return x - y;
+    if (op === "*") return x * y;
     return y === 0 ? null : x / y;
   };
 
   const reset = () => {
-    current = '0';
+    current = "0";
     previous = null;
     operator = null;
     overwrite = true;
-    lastExpr = '';
+    lastExpr = "";
     error = false;
   };
 
   const render = () => {
-    out.textContent = error ? 'Erro' : fmt(current);
-    exprLine.textContent = lastExpr || (operator ? `${fmt(previous)} ${symbols[operator]}` : '');
-    opButtons.forEach((button) => button.classList.toggle('active', operator === button.dataset.op && overwrite));
+    out.textContent = error ? "Erro" : fmt(current);
+    exprLine.textContent =
+      lastExpr || (operator ? `${fmt(previous)} ${symbols[operator]}` : "");
+    opButtons.forEach((button) =>
+      button.classList.toggle(
+        "active",
+        operator === button.dataset.op && overwrite,
+      ),
+    );
   };
 
   const press = {
@@ -190,26 +236,30 @@ if (calc) {
       if (overwrite) {
         current = d;
         overwrite = false;
-      } else if (current.replace(/[-.]/g, '').length < 12) {
-        current = current === '0' ? d : current + d;
+      } else if (current.replace(/[-.]/g, "").length < 12) {
+        current = current === "0" ? d : current + d;
       }
-      lastExpr = '';
+      lastExpr = "";
     },
     dot() {
       if (error) reset();
       if (overwrite) {
-        current = '0.';
+        current = "0.";
         overwrite = false;
-      } else if (!current.includes('.')) {
-        current += '.';
+      } else if (!current.includes(".")) {
+        current += ".";
       }
-      lastExpr = '';
+      lastExpr = "";
     },
     op(o) {
       if (error) reset();
       if (operator && !overwrite) {
         const result = compute(previous, current, operator);
-        if (result === null) { reset(); error = true; return; }
+        if (result === null) {
+          reset();
+          error = true;
+          return;
+        }
         previous = clean(result);
         current = previous;
       } else if (!operator) {
@@ -217,25 +267,34 @@ if (calc) {
       }
       operator = o;
       overwrite = true;
-      lastExpr = '';
+      lastExpr = "";
     },
     equals() {
-      if (error) { reset(); return; }
+      if (error) {
+        reset();
+        return;
+      }
       if (!operator) return;
       const line = `${fmt(previous)} ${symbols[operator]} ${fmt(current)} =`;
       const result = compute(previous, current, operator);
-      if (result === null) { reset(); error = true; return; }
+      if (result === null) {
+        reset();
+        error = true;
+        return;
+      }
       current = clean(result);
       previous = null;
       operator = null;
       overwrite = true;
       lastExpr = line;
     },
-    clear() { reset(); }
+    clear() {
+      reset();
+    },
   };
 
-  calc.addEventListener('click', (event) => {
-    const key = event.target.closest('button');
+  calc.addEventListener("click", (event) => {
+    const key = event.target.closest("button");
     if (!key) return;
     if (key.dataset.k !== undefined) press.digit(key.dataset.k);
     else if (key.dataset.dot !== undefined) press.dot();
@@ -246,13 +305,13 @@ if (calc) {
   });
 
   // Teclado físico, quando o foco estiver dentro da calculadora
-  calc.addEventListener('keydown', (event) => {
+  calc.addEventListener("keydown", (event) => {
     const { key } = event;
     if (/^\d$/.test(key)) press.digit(key);
-    else if (key === ',' || key === '.') press.dot();
-    else if (key.length === 1 && '+-*/'.includes(key)) press.op(key);
-    else if (key === '=') press.equals();
-    else if (key === 'Escape' || key === 'c' || key === 'C') press.clear();
+    else if (key === "," || key === ".") press.dot();
+    else if (key.length === 1 && "+-*/".includes(key)) press.op(key);
+    else if (key === "=") press.equals();
+    else if (key === "Escape" || key === "c" || key === "C") press.clear();
     else return;
     event.preventDefault();
     render();
@@ -262,5 +321,29 @@ if (calc) {
 }
 
 /* ---------- Ano no rodapé ---------- */
-const year = select('#year');
+const year = select("#year");
 if (year) year.textContent = new Date().getFullYear();
+
+// ---------- Modo escuro ----------
+(function () {
+  var toggle = document.getElementById("themeToggle");
+  if (!toggle) return;
+
+  var root = document.documentElement;
+
+  function applyIcon(theme) {
+    var icon = toggle.querySelector(".theme-toggle-icon");
+    if (icon) icon.textContent = theme === "dark" ? "☀️" : "🌙";
+    toggle.setAttribute("aria-pressed", theme === "dark");
+  }
+
+  applyIcon(root.getAttribute("data-theme") || "light");
+
+  toggle.addEventListener("click", function () {
+    var current = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    var next = current === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+    applyIcon(next);
+  });
+})();
