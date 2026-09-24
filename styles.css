@@ -2515,3 +2515,41 @@ button {
     gap: 16px;
   }
 }
+
+
+/* Slots para screenshots reais dos projetos. Enquanto a imagem não existe,
+   o visual original do card permanece visível. */
+.pj-shot-slot {
+  position: absolute !important;
+  inset: 0;
+  z-index: 0 !important;
+  display: block;
+  width: 100% !important;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.45s ease;
+}
+
+.pj-shot-slot[data-project-shot="supernatural"] {
+  background-image: url("img/projects/supernatural.webp");
+}
+
+.pj-shot-slot[data-project-shot="petshop"] {
+  background-image: url("img/projects/petshop.webp");
+}
+
+.pj-shot-slot.is-ready {
+  opacity: 1;
+}
+
+.pj-preview-link:hover .pj-shot-slot.is-ready {
+  transform: scale(1.025);
+}
+
+.pj-shot-slot.is-ready ~ .pj-super-title,
+.pj-shot-slot.is-ready ~ small,
+.pj-shot-slot.is-ready ~ span:not(.pj-preview-badge) {
+  opacity: 0;
+}
