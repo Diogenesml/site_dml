@@ -40,7 +40,6 @@ document.addEventListener("click", (event) => {
    02. Animações de entrada
    ========================================================================== */
 selectAll(".reveal").forEach((element) => {
-  element.classList.add("reveal-pending");
   const siblings = [...element.parentElement.children].filter((child) =>
     child.classList.contains("reveal"),
   );
