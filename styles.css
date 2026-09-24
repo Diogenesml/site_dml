@@ -2517,39 +2517,46 @@ button {
 }
 
 
-/* Slots para screenshots reais dos projetos. Enquanto a imagem não existe,
-   o visual original do card permanece visível. */
-.pj-shot-slot {
+/* Previews reais dos sites publicados dentro dos cards */
+.pj-live-preview {
   position: absolute !important;
   inset: 0;
   z-index: 0 !important;
   display: block;
-  width: 100% !important;
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  overflow: hidden;
+  background: #111;
+  pointer-events: none;
+}
+
+.pj-live-preview iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1650px;
+  height: 920px;
+  border: 0;
+  transform: scale(0.31);
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+.pj-view--pet .pj-live-preview iframe {
+  width: 1820px;
+  transform: scale(0.29);
+}
+
+.pj-live-preview ~ .pj-super-title,
+.pj-live-preview ~ small,
+.pj-live-preview ~ span:not(.pj-preview-badge) {
   opacity: 0;
-  transition: opacity 0.25s ease, transform 0.45s ease;
 }
 
-.pj-shot-slot[data-project-shot="supernatural"] {
-  background-image: url("img/projects/supernatural.webp");
-}
+@media (max-width: 860px) {
+  .pj-live-preview iframe {
+    transform: scale(0.27);
+  }
 
-.pj-shot-slot[data-project-shot="petshop"] {
-  background-image: url("img/projects/petshop.webp");
-}
-
-.pj-shot-slot.is-ready {
-  opacity: 1;
-}
-
-.pj-preview-link:hover .pj-shot-slot.is-ready {
-  transform: scale(1.025);
-}
-
-.pj-shot-slot.is-ready ~ .pj-super-title,
-.pj-shot-slot.is-ready ~ small,
-.pj-shot-slot.is-ready ~ span:not(.pj-preview-badge) {
-  opacity: 0;
+  .pj-view--pet .pj-live-preview iframe {
+    transform: scale(0.25);
+  }
 }
