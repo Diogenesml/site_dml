@@ -39,29 +39,32 @@ document.addEventListener("click", (event) => {
 /* ==========================================================================
    02. Animações de entrada
    ========================================================================== */
-selectAll(".reveal").forEach((element) => {
-  const siblings = [...element.parentElement.children].filter((child) =>
-    child.classList.contains("reveal"),
+if (!reduceMotion && "IntersectionObserver" in window) {
+  const revealElements = selectAll(".reveal");
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 },
   );
-  element.style.setProperty(
-    "--d",
-    `${Math.min(siblings.indexOf(element), 5) * 90}ms`,
-  );
-});
 
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.12 },
-);
-
-selectAll(".reveal").forEach((element) => revealObserver.observe(element));
+  revealElements.forEach((element) => {
+    const siblings = [...element.parentElement.children].filter((child) =>
+      child.classList.contains("reveal"),
+    );
+    element.style.setProperty(
+      "--d",
+      `${Math.min(siblings.indexOf(element), 5) * 90}ms`,
+    );
+    element.classList.add("reveal-pending");
+    revealObserver.observe(element);
+  });
+}
 
 /* ==========================================================================
    03. Estado de rolagem

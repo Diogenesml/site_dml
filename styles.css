@@ -2177,3 +2177,262 @@ button {
     transparent 60%
   );
 }
+
+/* ==========================================================================
+   Fase 2 — projetos verificáveis
+   ========================================================================== */
+.pj-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.pj-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font: 700 12px var(--mono);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 3px;
+}
+
+.pj-links a:hover {
+  color: var(--accent-text);
+}
+
+.pj-links a span {
+  transition: transform 0.2s ease;
+}
+
+.pj-links a:hover span {
+  transform: translate(2px, -2px);
+}
+
+.pj-view--system,
+.pj-view--pet {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 30px;
+}
+
+.pj-view--system {
+  color: #d9e6d6;
+  background:
+    linear-gradient(rgba(23, 37, 31, 0.72), rgba(23, 37, 31, 0.96)),
+    repeating-linear-gradient(90deg, transparent 0 39px, rgba(215, 255, 79, 0.12) 40px);
+}
+
+.pj-view--pet {
+  color: #18231e;
+  background:
+    radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.7), transparent 28%),
+    #d7ff4f;
+}
+
+.pj-view--system span,
+.pj-view--pet span {
+  font: 700 clamp(24px, 3vw, 36px) var(--mono);
+  letter-spacing: -0.05em;
+}
+
+.pj-view--system small,
+.pj-view--pet small {
+  font: 500 11px var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   Fase 2 — competências e contato
+   ========================================================================== */
+.skill-groups {
+  display: grid;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.skill-groups .chips {
+  margin-top: 8px;
+}
+
+.skill-label {
+  display: block;
+  color: var(--copy);
+  font: 500 10px var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px;
+}
+
+.contact-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font: 700 12px var(--mono);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 4px;
+}
+
+.contact-secondary:hover {
+  color: var(--accent-text);
+}
+
+@media (max-width: 560px) {
+  .contact-links {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+
+/* ==========================================================================
+   Fase 2 — robustez, acessibilidade e mobile
+   ========================================================================== */
+.reveal.reveal-pending {
+  transition-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .reveal,
+  .reveal.reveal-pending {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .hero h1 {
+    overflow-wrap: anywhere;
+  }
+
+  .hero-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pj-view--system,
+  .pj-view--pet {
+    min-height: 220px;
+    padding: 24px;
+  }
+
+  .pj-links a,
+  .contact-secondary {
+    min-height: 44px;
+    align-items: center;
+  }
+}
+
+
+/* ==========================================================================
+   Fase 2 — correções finais do card Sobre mim no mobile
+   ========================================================================== */
+@media (max-width: 860px) {
+  .about-card {
+    overflow: hidden;
+  }
+
+  .about-id {
+    text-align: center;
+  }
+
+  .about-body {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-card {
+    padding: 30px 20px 26px;
+    gap: 30px;
+  }
+
+  .about-body > p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .skill-groups {
+    gap: 20px;
+  }
+
+  .about-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 20px;
+  }
+
+  .about-links a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+
+/* ==========================================================================
+   Fase 2 — correção de contraste no tema escuro
+   ========================================================================== */
+:root[data-theme="dark"] .pj-card,
+:root[data-theme="dark"] .about-card {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .pj-body,
+:root[data-theme="dark"] .about-body {
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .pj-body p,
+:root[data-theme="dark"] .about-body > p {
+  color: var(--copy);
+}
+
+:root[data-theme="dark"] .pj-tags li,
+:root[data-theme="dark"] .chips li {
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+:root[data-theme="dark"] .pj-links a,
+:root[data-theme="dark"] .about-links a,
+:root[data-theme="dark"] .contact-secondary {
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .pj-year,
+:root[data-theme="dark"] .skill-label {
+  color: var(--copy);
+}
