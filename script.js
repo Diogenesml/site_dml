@@ -371,16 +371,3 @@ if (themeToggle) {
     renderTheme(nextTheme);
   });
 }
-
-
-// Ativa capas reais somente quando o screenshot existe.
-// Assim, a ausência de uma imagem nunca deixa o card vazio.
-document.querySelectorAll(".pj-shot-slot").forEach((slot) => {
-  const bg = getComputedStyle(slot).backgroundImage;
-  const match = bg.match(/url\(["']?(.*?)["']?\)/);
-  if (!match) return;
-
-  const image = new Image();
-  image.onload = () => slot.classList.add("is-ready");
-  image.src = match[1];
-});
