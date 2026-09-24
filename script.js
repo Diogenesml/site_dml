@@ -10,7 +10,9 @@ const finePointer = window.matchMedia(
   "(hover: hover) and (pointer: fine)",
 ).matches;
 
-/* ==========================================================================\n   01. Navegação\n   ========================================================================== */
+/* ==========================================================================
+   01. Navegação
+   ========================================================================== */
 const menuButton = select(".menu-button");
 const navigation = select(".nav");
 
@@ -34,7 +36,9 @@ document.addEventListener("click", (event) => {
   if (!event.target.closest(".site-header")) setMenu(false);
 });
 
-/* ==========================================================================\n   02. Animações de entrada\n   ========================================================================== */
+/* ==========================================================================
+   02. Animações de entrada
+   ========================================================================== */
 selectAll(".reveal").forEach((element) => {
   const siblings = [...element.parentElement.children].filter((child) =>
     child.classList.contains("reveal"),
@@ -59,7 +63,9 @@ const revealObserver = new IntersectionObserver(
 
 selectAll(".reveal").forEach((element) => revealObserver.observe(element));
 
-/* ==========================================================================\n   03. Estado de rolagem\n   ========================================================================== */
+/* ==========================================================================
+   03. Estado de rolagem
+   ========================================================================== */
 const progressBar = select(".scroll-progress");
 const headerBg = select(".header-bg");
 let scrollTicking = false;
@@ -85,7 +91,9 @@ window.addEventListener(
 );
 updateScroll();
 
-/* ==========================================================================\n   04. Navegação ativa (scroll spy)\n   ========================================================================== */
+/* ==========================================================================
+   04. Navegação ativa (scroll spy)
+   ========================================================================== */
 const spy = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -103,7 +111,9 @@ const spy = new IntersectionObserver(
 
 selectAll("main section[id]").forEach((section) => spy.observe(section));
 
-/* ==========================================================================\n   05. Efeito de digitação do hero\n   ========================================================================== */
+/* ==========================================================================
+   05. Efeito de digitação do hero
+   ========================================================================== */
 const typed = select(".typed");
 
 if (typed && !reduceMotion) {
@@ -132,7 +142,9 @@ if (typed && !reduceMotion) {
   setTimeout(tick, 2200);
 }
 
-/* ==========================================================================\n   06. Interações de ponteiro\n   ========================================================================== */
+/* ==========================================================================
+   06. Interações de ponteiro
+   ========================================================================== */
 if (finePointer && !reduceMotion) {
   // Inclinação suave em cards marcados com data-tilt
   selectAll("[data-tilt]").forEach((element) => {
@@ -180,7 +192,9 @@ if (finePointer && !reduceMotion) {
   });
 }
 
-/* ==========================================================================\n   07. Calculadora do portfólio\n   ========================================================================== */
+/* ==========================================================================
+   07. Calculadora do portfólio
+   ========================================================================== */
 const calc = select("[data-calc]");
 
 if (calc) {
@@ -320,8 +334,37 @@ if (calc) {
   render();
 }
 
-/* ==========================================================================\n   08. Rodapé\n   ========================================================================== */
+/* ==========================================================================
+   08. Rodapé
+   ========================================================================== */
 const year = select("#year");
 if (year) year.textContent = new Date().getFullYear();
 
-/* ==========================================================================\n   09. Tema claro / escuro\n   ========================================================================== */\nconst themeToggle = select("#themeToggle");\n\nif (themeToggle) {\n  const root = document.documentElement;\n  const themeIcon = select(".theme-toggle-icon", themeToggle);\n\n  const renderTheme = (theme) => {\n    const isDark = theme === "dark";\n    if (themeIcon) themeIcon.textContent = isDark ? "☀️" : "🌙";\n    themeToggle.setAttribute("aria-pressed", String(isDark));\n    themeToggle.setAttribute(\n      "aria-label",\n      isDark ? "Ativar modo claro" : "Ativar modo escuro",\n    );\n  };\n\n  renderTheme(root.dataset.theme || "light");\n\n  themeToggle.addEventListener("click", () => {\n    const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";\n    root.dataset.theme = nextTheme;\n    localStorage.setItem("theme", nextTheme);\n    renderTheme(nextTheme);\n  });\n}\n
+/* ==========================================================================
+   09. Tema claro / escuro
+   ========================================================================== */
+const themeToggle = select("#themeToggle");
+
+if (themeToggle) {
+  const root = document.documentElement;
+  const themeIcon = select(".theme-toggle-icon", themeToggle);
+
+  const renderTheme = (theme) => {
+    const isDark = theme === "dark";
+    if (themeIcon) themeIcon.textContent = isDark ? "☀️" : "🌙";
+    themeToggle.setAttribute("aria-pressed", String(isDark));
+    themeToggle.setAttribute(
+      "aria-label",
+      isDark ? "Ativar modo claro" : "Ativar modo escuro",
+    );
+  };
+
+  renderTheme(root.dataset.theme || "light");
+
+  themeToggle.addEventListener("click", () => {
+    const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = nextTheme;
+    localStorage.setItem("theme", nextTheme);
+    renderTheme(nextTheme);
+  });
+}
