@@ -1,1 +1,32 @@
-# Diógenes Moreira — Portfólio\n\nPortfólio pessoal desenvolvido com HTML, CSS e JavaScript puro, com foco em apresentação profissional, responsividade, acessibilidade e interações leves.\n\n## Recursos\n\n- Layout responsivo\n- Tema claro e escuro com preferência persistida\n- Navegação mobile acessível\n- Animações com respeito a \`prefers-reduced-motion\`\n- Scroll spy e indicador de progresso\n- Calculadora interativa\n- Interações de ponteiro em dispositivos compatíveis\n\n## Estrutura\n\n\`index.html\` contém a estrutura e o conteúdo da página.\n\`styles.css\` concentra o sistema visual e os breakpoints.\n\`script.js\` contém as interações, organizadas por responsabilidade.\n\n## Tecnologias\n\nHTML5 · CSS3 · JavaScript · Git · GitHub\n\n## Desenvolvimento local\n\nNão há etapa de build. Clone o repositório e abra \`index.html\` no navegador ou utilize uma extensão de servidor local, como Live Server.\n\n## Autor\n\nDiógenes Moreira Legal\n
+# Diógenes Moreira — Portfólio
+
+Portfólio pessoal desenvolvido com HTML, CSS e JavaScript puro, com foco em apresentação profissional, responsividade, acessibilidade e interações leves.
+
+## Recursos
+
+- Layout responsivo
+- Tema claro e escuro com preferência persistida
+- Navegação mobile acessível
+- Animações com respeito a `prefers-reduced-motion`
+- Scroll spy e indicador de progresso
+- Calculadora interativa
+- Interações de ponteiro em dispositivos compatíveis
+
+## Estrutura
+
+- `index.html`: estrutura e conteúdo da página
+- `styles.css`: sistema visual e breakpoints
+- `script.js`: interações organizadas por responsabilidade
+- `robots.txt` e `sitemap.xml`: apoio à indexação
+
+## Tecnologias
+
+HTML5 · CSS3 · JavaScript · Git · GitHub
+
+## Desenvolvimento local
+
+Não há etapa de build. Clone o repositório e abra `index.html` no navegador ou utilize um servidor local, como Live Server.
+
+## Autor
+
+Diógenes Moreira Legal
