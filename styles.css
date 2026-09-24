@@ -2177,3 +2177,72 @@ button {
     transparent 60%
   );
 }
+
+/* ==========================================================================
+   Fase 2 — projetos verificáveis
+   ========================================================================== */
+.pj-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.pj-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font: 700 12px var(--mono);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 3px;
+}
+
+.pj-links a:hover {
+  color: var(--accent-text);
+}
+
+.pj-links a span {
+  transition: transform 0.2s ease;
+}
+
+.pj-links a:hover span {
+  transform: translate(2px, -2px);
+}
+
+.pj-view--system,
+.pj-view--pet {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 30px;
+}
+
+.pj-view--system {
+  color: #d9e6d6;
+  background:
+    linear-gradient(rgba(23, 37, 31, 0.72), rgba(23, 37, 31, 0.96)),
+    repeating-linear-gradient(90deg, transparent 0 39px, rgba(215, 255, 79, 0.12) 40px);
+}
+
+.pj-view--pet {
+  color: #18231e;
+  background:
+    radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.7), transparent 28%),
+    #d7ff4f;
+}
+
+.pj-view--system span,
+.pj-view--pet span {
+  font: 700 clamp(24px, 3vw, 36px) var(--mono);
+  letter-spacing: -0.05em;
+}
+
+.pj-view--system small,
+.pj-view--pet small {
+  font: 500 11px var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
