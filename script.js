@@ -10,7 +10,7 @@ const finePointer = window.matchMedia(
   "(hover: hover) and (pointer: fine)",
 ).matches;
 
-/* ---------- Menu mobile ---------- */
+/* ==========================================================================\n   01. Navegação\n   ========================================================================== */
 const menuButton = select(".menu-button");
 const navigation = select(".nav");
 
@@ -34,7 +34,7 @@ document.addEventListener("click", (event) => {
   if (!event.target.closest(".site-header")) setMenu(false);
 });
 
-/* ---------- Aparecer ao rolar (com pequeno escalonamento em listas) ---------- */
+/* ==========================================================================\n   02. Animações de entrada\n   ========================================================================== */
 selectAll(".reveal").forEach((element) => {
   const siblings = [...element.parentElement.children].filter((child) =>
     child.classList.contains("reveal"),
@@ -59,7 +59,7 @@ const revealObserver = new IntersectionObserver(
 
 selectAll(".reveal").forEach((element) => revealObserver.observe(element));
 
-/* ---------- Barra de progresso + cabeçalho ao rolar ---------- */
+/* ==========================================================================\n   03. Estado de rolagem\n   ========================================================================== */
 const progressBar = select(".scroll-progress");
 const headerBg = select(".header-bg");
 let scrollTicking = false;
@@ -85,7 +85,7 @@ window.addEventListener(
 );
 updateScroll();
 
-/* ---------- Link ativo no menu conforme a seção visível ---------- */
+/* ==========================================================================\n   04. Navegação ativa (scroll spy)\n   ========================================================================== */
 const spy = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -103,7 +103,7 @@ const spy = new IntersectionObserver(
 
 selectAll("main section[id]").forEach((section) => spy.observe(section));
 
-/* ---------- Palavra que se reescreve no código do hero ---------- */
+/* ==========================================================================\n   05. Efeito de digitação do hero\n   ========================================================================== */
 const typed = select(".typed");
 
 if (typed && !reduceMotion) {
@@ -132,7 +132,7 @@ if (typed && !reduceMotion) {
   setTimeout(tick, 2200);
 }
 
-/* ---------- Efeitos de mouse (só em telas com mouse) ---------- */
+/* ==========================================================================\n   06. Interações de ponteiro\n   ========================================================================== */
 if (finePointer && !reduceMotion) {
   // Inclinação suave em cards marcados com data-tilt
   selectAll("[data-tilt]").forEach((element) => {
@@ -180,7 +180,7 @@ if (finePointer && !reduceMotion) {
   });
 }
 
-/* ---------- Calculadora funcional (card de projeto) ---------- */
+/* ==========================================================================\n   07. Calculadora do portfólio\n   ========================================================================== */
 const calc = select("[data-calc]");
 
 if (calc) {
@@ -320,30 +320,8 @@ if (calc) {
   render();
 }
 
-/* ---------- Ano no rodapé ---------- */
+/* ==========================================================================\n   08. Rodapé\n   ========================================================================== */
 const year = select("#year");
 if (year) year.textContent = new Date().getFullYear();
 
-// ---------- Modo escuro ----------
-(function () {
-  var toggle = document.getElementById("themeToggle");
-  if (!toggle) return;
-
-  var root = document.documentElement;
-
-  function applyIcon(theme) {
-    var icon = toggle.querySelector(".theme-toggle-icon");
-    if (icon) icon.textContent = theme === "dark" ? "☀️" : "🌙";
-    toggle.setAttribute("aria-pressed", theme === "dark");
-  }
-
-  applyIcon(root.getAttribute("data-theme") || "light");
-
-  toggle.addEventListener("click", function () {
-    var current = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
-    var next = current === "dark" ? "light" : "dark";
-    root.setAttribute("data-theme", next);
-    localStorage.setItem("theme", next);
-    applyIcon(next);
-  });
-})();
+/* ==========================================================================\n   09. Tema claro / escuro\n   ========================================================================== */\nconst themeToggle = select("#themeToggle");\n\nif (themeToggle) {\n  const root = document.documentElement;\n  const themeIcon = select(".theme-toggle-icon", themeToggle);\n\n  const renderTheme = (theme) => {\n    const isDark = theme === "dark";\n    if (themeIcon) themeIcon.textContent = isDark ? "☀️" : "🌙";\n    themeToggle.setAttribute("aria-pressed", String(isDark));\n    themeToggle.setAttribute(\n      "aria-label",\n      isDark ? "Ativar modo claro" : "Ativar modo escuro",\n    );\n  };\n\n  renderTheme(root.dataset.theme || "light");\n\n  themeToggle.addEventListener("click", () => {\n    const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";\n    root.dataset.theme = nextTheme;\n    localStorage.setItem("theme", nextTheme);\n    renderTheme(nextTheme);\n  });\n}\n
