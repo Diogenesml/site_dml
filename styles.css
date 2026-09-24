@@ -1,13 +1,16 @@
 :root {
+  /* Tipografia */
+  --mono: "DM Mono", monospace;
+  --sans: "Manrope", sans-serif;
+
+  /* Paleta base */
   --ink: #18231e;
   --paper: #f2f0e9;
   --acid: #d7ff4f;
   --muted: #788078;
   --line: rgba(24, 35, 30, 0.16);
-  --mono: "DM Mono", monospace;
-  --sans: "Manrope", sans-serif;
 
-  /* cores que se repetiam soltas pelo arquivo — agora centralizadas */
+  /* Acentos */
   --accent: #638100;
   --accent-soft: #83b700;
   --accent2: #6fb0c2;
@@ -2081,8 +2084,16 @@ body {
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-a, button {
-  transition: color 0.2s ease, border-color 0.2s ease;
+a,
+button {
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent-text);
+  outline-offset: 4px;
 }
 
 :root[data-theme="dark"] {
@@ -2122,8 +2133,8 @@ a, button {
   color: var(--accent-code);
 }
 
-.calculator {
-  background: var(--accent-calc);
+.pj-view--calc {
+  background-color: var(--accent-calc);
 }
 
 .theme-toggle {
