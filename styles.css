@@ -2353,3 +2353,49 @@ button {
     align-items: center;
   }
 }
+
+
+/* ==========================================================================
+   Fase 2 — correções finais do card Sobre mim no mobile
+   ========================================================================== */
+@media (max-width: 860px) {
+  .about-card {
+    overflow: hidden;
+  }
+
+  .about-id {
+    text-align: center;
+  }
+
+  .about-body {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-card {
+    padding: 30px 20px 26px;
+    gap: 30px;
+  }
+
+  .about-body > p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .skill-groups {
+    gap: 20px;
+  }
+
+  .about-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 20px;
+  }
+
+  .about-links a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
