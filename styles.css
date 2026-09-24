@@ -870,6 +870,11 @@ details p {
 }
 
 .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal.reveal-pending {
   opacity: 0;
   transform: translateY(20px);
   transition:
@@ -877,7 +882,7 @@ details p {
     transform 0.7s ease;
 }
 
-.reveal.visible {
+.reveal.reveal-pending.visible {
   opacity: 1;
   transform: translateY(0);
 }
