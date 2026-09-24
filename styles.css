@@ -2297,3 +2297,59 @@ button {
     flex-direction: column;
   }
 }
+
+
+/* ==========================================================================
+   Fase 2 — robustez, acessibilidade e mobile
+   ========================================================================== */
+.reveal.reveal-pending {
+  transition-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .reveal,
+  .reveal.reveal-pending {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .hero h1 {
+    overflow-wrap: anywhere;
+  }
+
+  .hero-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pj-view--system,
+  .pj-view--pet {
+    min-height: 220px;
+    padding: 24px;
+  }
+
+  .pj-links a,
+  .contact-secondary {
+    min-height: 44px;
+    align-items: center;
+  }
+}
