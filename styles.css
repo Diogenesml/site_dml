@@ -2399,3 +2399,40 @@ button {
     align-items: center;
   }
 }
+
+
+/* ==========================================================================
+   Fase 2 — correção de contraste no tema escuro
+   ========================================================================== */
+:root[data-theme="dark"] .pj-card,
+:root[data-theme="dark"] .about-card {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .pj-body,
+:root[data-theme="dark"] .about-body {
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .pj-body p,
+:root[data-theme="dark"] .about-body > p {
+  color: var(--copy);
+}
+
+:root[data-theme="dark"] .pj-tags li,
+:root[data-theme="dark"] .chips li {
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+:root[data-theme="dark"] .pj-links a,
+:root[data-theme="dark"] .about-links a,
+:root[data-theme="dark"] .contact-secondary {
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .pj-year,
+:root[data-theme="dark"] .skill-label {
+  color: var(--copy);
+}
